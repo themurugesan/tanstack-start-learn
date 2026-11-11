@@ -5,5 +5,5 @@ export const Route = createFileRoute('/three')({
 })
 
 function PageThree() {
-  return <h1 className="text-3xl font-bold text-blue-600">Hello World - Page Three</h1>
+  return <h1 className="text-2xl font-bold text-brand-700 sm:text-4xl">Hello World - Page Three</h1>
 }

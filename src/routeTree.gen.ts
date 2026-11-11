@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FourRouteImport } from './routes/four'
 import { Route as OneRouteImport } from './routes/one'
 import { Route as ThreeRouteImport } from './routes/three'
 import { Route as TwoRouteImport } from './routes/two'
@@ -18,6 +19,11 @@ import { Route as UsersRouteImport } from './routes/users'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FourRoute = FourRouteImport.update({
+  id: '/four',
+  path: '/four',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OneRoute = OneRouteImport.update({
@@ -43,6 +49,7 @@ const UsersRoute = UsersRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/four': typeof FourRoute
   '/one': typeof OneRoute
   '/three': typeof ThreeRoute
   '/two': typeof TwoRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/four': typeof FourRoute
   '/one': typeof OneRoute
   '/three': typeof ThreeRoute
   '/two': typeof TwoRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/four': typeof FourRoute
   '/one': typeof OneRoute
   '/three': typeof ThreeRoute
   '/two': typeof TwoRoute
@@ -65,14 +74,15 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/one' | '/three' | '/two' | '/users'
+  fullPaths: '/' | '/four' | '/one' | '/three' | '/two' | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/one' | '/three' | '/two' | '/users'
-  id: '__root__' | '/' | '/one' | '/three' | '/two' | '/users'
+  to: '/' | '/four' | '/one' | '/three' | '/two' | '/users'
+  id: '__root__' | '/' | '/four' | '/one' | '/three' | '/two' | '/users'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FourRoute: typeof FourRoute
   OneRoute: typeof OneRoute
   ThreeRoute: typeof ThreeRoute
   TwoRoute: typeof TwoRoute
@@ -86,6 +96,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/four': {
+      id: '/four'
+      path: '/four'
+      fullPath: '/four'
+      preLoaderRoute: typeof FourRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/one': {
@@ -121,6 +138,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FourRoute: FourRoute,
   OneRoute: OneRoute,
   ThreeRoute: ThreeRoute,
   TwoRoute: TwoRoute,

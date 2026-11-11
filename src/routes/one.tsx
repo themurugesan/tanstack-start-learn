@@ -5,5 +5,5 @@ export const Route = createFileRoute('/one')({
 })
 
 function PageOne() {
-  return <h1 className="text-3xl font-bold text-blue-600">Hello World - Page One</h1>
+  return <h1 className="text-2xl font-bold text-brand-700 sm:text-4xl">Hello World - Page One</h1>
 }

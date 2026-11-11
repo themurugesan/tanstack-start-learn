@@ -45,59 +45,58 @@ function UsersPage() {
     refresh()
   }
 
-  return (
-    <div className="max-w-2xl">
-      <h1 className="mb-4 text-3xl font-bold text-blue-600">Users (CRUD with MongoDB)</h1>
+  const input =
+    'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100'
 
-      <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
-        <input
-          className="flex-1 rounded border border-gray-300 bg-white px-3 py-2"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          className="flex-1 rounded border border-gray-300 bg-white px-3 py-2"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button type="submit" className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+  return (
+    <div className="mx-auto max-w-3xl">
+      <h1 className="mb-6 text-2xl font-bold text-brand-700 sm:text-4xl">Users</h1>
+
+      {/* Mobile: fields stacked (flex-col). sm and up: in one row (sm:flex-row) */}
+      <form
+        onSubmit={handleSubmit}
+        className="mb-6 flex flex-col gap-3 rounded-xl bg-white p-4 shadow-sm sm:flex-row"
+      >
+        <input className={input} placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+        <input className={input} placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <button
+          type="submit"
+          className="rounded-lg bg-brand-600 px-5 py-2 font-medium text-white hover:bg-brand-700"
+        >
           {editId === null ? 'Add' : 'Update'}
         </button>
       </form>
 
-      <table className="w-full overflow-hidden rounded bg-white shadow">
-        <thead className="bg-gray-200 text-left">
-          <tr>
-            <th className="p-3">Name</th>
-            <th className="p-3">Email</th>
-            <th className="p-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-t">
-              <td className="p-3">{user.name}</td>
-              <td className="p-3">{user.email}</td>
-              <td className="flex gap-2 p-3">
-                <button
-                  onClick={() => handleEdit(user)}
-                  className="rounded bg-yellow-500 px-3 py-1 text-white hover:bg-yellow-600"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {users.length === 0 && <p className="text-center text-slate-500">No users yet. Add one above.</p>}
+
+      {/* Each user is a card. Mobile: stacked. sm and up: one row */}
+      <ul className="flex flex-col gap-3">
+        {users.map((user) => (
+          <li
+            key={user.id}
+            className="flex flex-col gap-3 rounded-xl bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div>
+              <p className="font-semibold">{user.name}</p>
+              <p className="text-sm text-slate-500">{user.email}</p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleEdit(user)}
+                className="flex-1 rounded-lg border border-brand-600 px-4 py-1.5 text-brand-600 hover:bg-brand-50 sm:flex-none"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(user.id)}
+                className="flex-1 rounded-lg bg-red-600 px-4 py-1.5 text-white hover:bg-red-700 sm:flex-none"
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
